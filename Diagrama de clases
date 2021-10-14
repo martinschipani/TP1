@@ -1,0 +1,42 @@
+@startuml
+Class AlgoRemis{
+    - obtenerChoferMasBarato(String): Chofer
+    + crearViajeConDestinoaKmspeajes(String, int, int)
+    + registrarChoferDeAutoconTarifaInicial(String, int)
+    + registrarChoferDeAutoElectricoconTarifaInicial(String, int)
+    + viajeMasBaratoParaDestino(String): Viaje
+}
+AlgoRemis *---"*" Chofer
+AlgoRemis *---"*" Viaje
+
+Class Chofer{
+    - String
+    - int
+    + nombre(): String
+    + nombreTarifaInicial(String, int)
+}
+
+Class ChoferDeAuto extends Chofer{
+    calcularPrecioCantidadKilometroscantidadPeajes(int, int): int
+}
+
+Class ChoferDeAutoElectrico extends Chofer{
+    calcularPrecioCantidadKilometroscantidadPeajes(int, int): int
+}
+
+Class Viaje{
+    - String
+    - int
+    - int
+    + chofer(): String
+    + consultarPrecioCon(Chofer): int
+    + destinokilometrospeajes(String, int, int)
+    + establecerChofer(Chofer)
+    + precio(): int
+}
+Viaje o---"0..1"Chofer
+
+Class ViajeHospital extends Viaje{
+    + precio(): int
+}
+@enduml
