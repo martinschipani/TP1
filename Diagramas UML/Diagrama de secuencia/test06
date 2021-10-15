@@ -1,0 +1,31 @@
+@startuml
+header page header
+title test06ViajeAHospitalRecibeUnDescuentoAdicional
+actor Test06
+create AlgoRemis
+Test06 -> AlgoRemis: AlgoRemis new
+activate AlgoRemis
+Test06 -> AlgoRemis: registrarChoferDeAuto: 'Pablo' conTarifaInicial: 450
+Test06 -> AlgoRemis: registrarChoferDeAuto: 'Santi' conTarifaInicial: 350
+create ChoferDeAuto
+AlgoRemis -> ChoferDeAuto: ChoferDeAuto new: 'Pablo' conTarifaInicial: 450
+activate ChoferDeAuto
+ChoferDeAuto --> AlgoRemis: choferes add: ChoferDeAuto
+AlgoRemis -> ChoferDeAuto: ChoferDeAuto new: 'Santi' conTarifaInicial: 350
+ChoferDeAuto --> AlgoRemis: choferes add: ChoferDeAuto
+Test06 -> AlgoRemis: crearViajeConDestino: 'Hospital Tres Arcos' aKms: 10 peajes: 1
+create ViajeHospital
+AlgoRemis -> ViajeHospital: ViajeHospital new destino: 'Hospital Tres Arcos' aKms: 10 peajes: 1
+activate ViajeHospital
+ViajeHospital --> AlgoRemis: viajes add: ViajeHospital
+Test06 -> AlgoRemis: viajeMasBaratoParaDestino: 'Hospital Tres Arcos'
+AlgoRemis -> AlgoRemis: self obtenerChoferMasBarato: 'Hospital Tres Arcos'
+AlgoRemis --> AlgoRemis: ChoferDeAuto
+AlgoRemis -> ViajeHospital: establecerChofer: ChoferDeAuto
+ViajeHospital -> ViajeHospital: chofer := ChoferDeAuto
+AlgoRemis --> Test06: ViajeHospital
+Test06 -> ViajeHospital: precio
+ViajeHospital -> ChoferDeAuto: calcualrPrecioCantidadKilometros: 10 cantidadPeajes: 1
+ChoferDeAuto --> ViajeHospital: 950
+ViajeHospital --> Test06: 950 * 0.2
+@enduml
